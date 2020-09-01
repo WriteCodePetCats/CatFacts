@@ -1,10 +1,16 @@
 [CmdletBinding()]
 param ()
 
-$userName = git config --get user.name
-$resp = Read-Host -Prompt "Are you absolutely sure you want to rebase, $userName? If you f--- something up, it's on you... [y/N]"
+$aheadBehind = git status -sb
+if ($aheadbehind -match '\[\w+.*\w+\]$') {
+    $ahead = [regex]::matches($aheadbehind, '(?<=ahead\s)\d+').value
+    $behind = [regex]::matches($aheadbehind, '(?<=behind\s)\d+').value
 
-if ($resp.ToLower() -ne 'y') {
+    $distance = [int]($ahead + $behind)
+}
+
+if ($distance -gt 2) {
+    Write-Output "Your branch is too far out of date to rebase ($distance)"
     exit 1
 }
 exit 0
