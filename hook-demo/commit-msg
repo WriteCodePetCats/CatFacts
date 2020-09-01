@@ -1,0 +1,2 @@
+#!/bin/sh
+pwsh.exe -NoProfile -Command .\\Assert-CommitMessage.ps1 -TempFile $1
