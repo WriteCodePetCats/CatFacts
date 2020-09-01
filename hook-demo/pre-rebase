@@ -1,0 +1,2 @@
+#!/bin/sh
+pwsh.exe -NoProfile -Command .\\hook-demo\\Confirm-Rebase.ps1
